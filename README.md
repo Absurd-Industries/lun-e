@@ -1,4 +1,4 @@
-![LUN-E](https://lune.absurd.industries/meta.jpg)
+![LUN-E](images/meta.jpg)
 
 # LUN-E
 
@@ -28,7 +28,7 @@ Open `index.html` in a browser. That's it. No npm. No webpack. No existential cr
 
 Real. ESP32-C3 powered. Emotionally unpredictable. Currently deployed on a bedsheet in Bengaluru.
 
-The FTL communication protocol is not real. The rover that refused to cross a crater — that one's real.
+The FTL communication protocol is not real. The rover that refused to cross a crater - that one's real.
 
 **[Build your own](https://github.com/harshith-cmd/T-01-The-Explorer)** or **[join the Discord](https://discord.com/invite/DUSUtguG2H)** to know when they're available to purchase.
 
