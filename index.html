@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>LUN-E: Lunar Operations // absurd.industries</title>
+    <meta name="title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <meta name="description"
+        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lune.absurd.industries/" />
+    <meta property="og:title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <meta property="og:description"
+        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
+    <meta property="og:image" content="https://lune.absurd.industries/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://lune.absurd.industries/" />
+    <meta property="twitter:title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <meta property="twitter:description"
+        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help." />
+    <meta property="twitter:image" content="https://lune.absurd.industries/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'lune-orange': '#FF6A00',
+                        'lune-amber': '#FF8C00',
+                        'lune-black': '#0A0A0A',
+                        'lune-dark': '#111111',
+                        'lune-gray': '#1A1A1A',
+                        'lune-light': '#E8E8E8',
+                        'lune-dim': '#666666',
+                    },
+                    fontFamily: {
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        display: ['"Anybody"', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Anybody:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body class="bg-lune-black text-lune-light font-mono overflow-x-hidden">
+
+    <div id="app">
+
+        <!-- ========== PILOT SIGNUP MODAL ========== -->
+        <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center"
+            @click.self="showModal = false">
+            <div class="absolute inset-0 bg-lune-black/90 backdrop-blur-sm"></div>
+            <div class="relative bg-lune-gray w-11/12 max-w-xl p-8 pixel-corners border-2 border-lune-orange">
+                <button @click="showModal = false"
+                    class="absolute top-4 right-4 text-lune-orange text-2xl font-bold hover:text-white transition-colors">&times;</button>
+
+                <!-- Before submit -->
+                <div v-if="!pilotRegistered">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-3 h-3 bg-lune-orange rounded-full animate-pulse"></div>
+                        <span class="text-lune-orange text-xs tracking-[0.3em] uppercase">Recruitment Open</span>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-black text-lune-orange mb-3">
+                        BECOME A LUN-E PILOT
+                    </h2>
+                    <p class="mb-6 text-lune-light/70 text-sm leading-relaxed">
+                        We need humans. Specifically, we need the kind of human who sees a tiny robot stuck on a lunar
+                        hill and takes it <span class="text-lune-orange">personally</span>. Enter your email. We'll send
+                        you your pilot credentials and mission briefing.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input v-model="pilotEmail" type="email" placeholder="pilot@earth.com"
+                            class="flex-1 bg-lune-black border border-lune-orange/40 text-lune-light px-4 py-3 font-mono text-sm focus:outline-none focus:border-lune-orange placeholder:text-lune-dim pixel-corners"
+                            @keyup.enter="registerPilot" />
+                        <button @click="registerPilot"
+                            class="tech-btn bg-lune-orange text-lune-black font-bold py-3 px-6 text-sm tracking-wider pixel-corners whitespace-nowrap">
+                            ENLIST →
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-lune-dim mt-3">
+                        No spam. Just mission-critical transmissions and the occasional rover emotional status update.
+                    </p>
+                </div>
+
+                <!-- After submit -->
+                <div v-else class="text-center py-4">
+                    <div class="text-5xl mb-4">🌕</div>
+                    <h2 class="font-display text-3xl font-black text-lune-orange mb-3">
+                        PILOT REGISTERED
+                    </h2>
+                    <p class="text-lune-light/70 text-sm mb-4">
+                        Welcome aboard, Pilot. Your credentials are being transmitted to lunar orbit.<br>
+                        Check your inbox for mission briefing.
+                    </p>
+                    <div class="inline-block bg-lune-black border border-lune-orange/30 px-4 py-2 pixel-corners">
+                        <span class="text-lune-dim text-xs">CALLSIGN:</span>
+                        <span class="text-lune-orange font-bold ml-2">{{ pilotCallsign }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== APRIL FOOLS REVEAL MODAL ========== -->
+        <div v-if="showReveal" class="fixed inset-0 z-50 flex items-center justify-center"
+            @click.self="showReveal = false">
+            <div class="absolute inset-0 bg-lune-black/90 backdrop-blur-sm"></div>
+            <div class="relative bg-lune-gray w-11/12 max-w-2xl p-8 pixel-corners border-2 border-lune-orange">
+                <button @click="showReveal = false"
+                    class="absolute top-4 right-4 text-lune-orange text-2xl font-bold hover:text-white transition-colors">&times;</button>
+                <h2 class="font-display text-3xl font-black text-lune-orange mb-4">APRIL FOOLS!</h2>
+
+                <!-- IMAGE SLOT: april fools reveal image -->
+                <div
+                    class="w-full h-48 bg-lune-black border border-lune-orange/20 pixel-corners mb-6 flex items-center justify-center">
+                    <span class="text-lune-dim text-xs tracking-widest">[ REVEAL IMAGE GOES HERE ]</span>
+                </div>
+
+                <p class="mb-4 text-sm leading-relaxed">
+                    While we'd absolutely <span class="text-lune-orange font-bold">love</span> to put Lun-Es on the
+                    actual Moon (and we haven't ruled it out), the rovers are currently deployed on a bedsheet in
+                    Bengaluru.
+                </p>
+                <p class="mb-6 text-sm leading-relaxed">
+                    But the rovers ARE real! Lun-E is a campaign for the soon to arrive open-source
+                    <span class="text-lune-orange font-bold">T-01: The Explorer</span>.
+                    Go build one, or drop your email to be a pilot program and we'll ping you once the kits are out.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">BUILD YOUR OWN</h3>
+                        <p class="text-xs text-lune-light/60 mb-3">Full open-source rover platform. ESP32-C3, OLED eyes,
+                            tank treads, opinions.</p>
+                        <a href="https://github.com/harshirth-cmd/T-01-The-Explorer" target="_blank"
+                            class="inline-block tech-btn bg-lune-orange text-lune-black font-bold py-2 px-4 text-xs pixel-corners">
+                            VIEW ON GITHUB →
+                        </a>
+                    </div>
+                    <div>
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">MORE ABSURDITY</h3>
+                        <p class="text-xs text-lune-light/60 mb-3">We put robots where they don't belong. And we're just
+                            getting started.</p>
+                        <a href="https://absurd.industries" target="_blank"
+                            class="inline-block tech-btn bg-lune-orange text-lune-black font-bold py-2 px-4 text-xs pixel-corners">
+                            ABSURD.INDUSTRIES →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ========== HERO SECTION ========== -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 relative">
+
+            <!-- Background grid effect -->
+            <div class="absolute inset-0 opacity-[0.03]"
+                style="background-image: repeating-linear-gradient(0deg, transparent, transparent 59px, #FF6A00 59px, #FF6A00 60px), repeating-linear-gradient(90deg, transparent, transparent 59px, #FF6A00 59px, #FF6A00 60px);">
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto">
+
+
+                <h1
+                    class="font-display text-6xl md:text-[8rem] font-black text-lune-orange leading-[0.85] mb-6 tracking-tight">
+                    LUN-E
+                </h1>
+                <p class="text-sm md:text-base text-lune-light/70 max-w-xl mx-auto mb-10 leading-relaxed">
+                    A swarm of autonomous rovers on the Moon. <br>And they need your help.
+                </p>
+
+                <!-- VIDEO SLOT: Hero trailer -->
+                <div class="w-full max-w-3xl mx-auto mb-12 pixel-corners overflow-hidden border border-lune-orange/20">
+                    <div class="relative w-full" style="padding-bottom: 56.25%;">
+                        <!-- REPLACE: YouTube embed or video element -->
+                        <div class="absolute inset-0 bg-lune-dark flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-3">🎬</div>
+                                <span class="text-lune-dim text-xs tracking-widest">[ TRAILER VIDEO EMBED GOES HERE
+                                    ]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-3xl mx-auto">
+                    <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
+                        <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">50</span>
+                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">ROVERS DEPLOYED</p>
+                    </div>
+                    <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
+                        <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">0ms</span>
+                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">EARTH↔MOON LATENCY</p>
+                    </div>
+                    <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
+                        <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">∞</span>
+                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">DIFFICULT SITUATIONS</p>
+                    </div>
+                    <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
+                        <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">YOU</span>
+                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">ARE THE SOLUTION</p>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <button @click="showModal = true"
+                        class="tech-btn bg-lune-orange text-lune-black font-display font-black py-4 px-10 text-lg tracking-wide pixel-corners">
+                        BECOME A PILOT
+                    </button>
+                    <p class="text-[10px] mt-4 text-lune-dim tracking-wider">
+                        * Zero experience required. We actually prefer it.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NARRATIVE SECTION: THE SITUATION ========== -->
+        <section class="py-24 px-4 relative">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="font-display text-4xl md:text-6xl font-black text-lune-orange mb-12 animate-on-scroll">
+                    THE SITUATION
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 ">
+
+                    <div class="space-y-6 animate-on-scroll">
+                        <p class="text-base leading-relaxed text-lune-light/80">
+                            Lun-Es are <span class="text-lune-orange font-bold">smart</span>.
+                            Arguably — too smart. They've started having <em>opinions</em>.
+                        </p>
+                        <p class="text-base leading-relaxed text-lune-light/80">
+                            One of them wouldn't cross a crater because, to quote the logs,
+                            it <span class="text-lune-orange font-bold">"doesn't feel right."</span>
+                        </p>
+                        <p class="text-base leading-relaxed text-lune-light/80">
+                            Our engineering can navigate the lunar surface. What it <em>cannot</em> do is deal with...
+                            whatever
+                            this is.
+                        </p>
+
+                    </div>
+
+                    <!-- IMAGE SLOT: Rovers in a "difficult situation" -->
+                    <div class="animate-on-scroll">
+                        <div
+                            class="w-full aspect-square bg-lune-dark border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
+                            <!-- REPLACE: Image of rovers on "moon surface" -->
+                            <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: ROVERS IN
+                                A<br>DIFFICULT SITUATION ]</span>
+                            <!-- Scanline overlay effect -->
+                            <div class="absolute inset-0 pointer-events-none opacity-10"
+                                style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
+                            </div>
+                        </div>
+                        <div class="mt-3 flex justify-between text-[10px] text-lune-dim tracking-wider">
+                            <span>CAM: UNIT-07-FWD</span>
+                            <span>LAT: 26.1°N — LON: 3.6°E</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NARRATIVE SECTION: THE ASK ========== -->
+        <section class="py-24 px-4 bg-lune-gray relative overflow-hidden">
+            <!-- Diagonal orange accent -->
+            <div class="absolute -top-20 -right-20 w-96 h-96 bg-lune-orange/5 rotate-45"></div>
+
+            <div class="max-w-5xl mx-auto relative z-10">
+
+                <div class="max-w-2xl animate-on-scroll">
+                    <h2 class="font-display text-4xl md:text-6xl font-black text-lune-orange mb-8">
+                        THAT'S WHERE YOU COME IN.
+                    </h2>
+                    <p class="text-lg leading-relaxed text-lune-light/80 mb-6">
+                        So we're handing the controls to you. A human. On Earth.
+                    </p>
+                    <p class="text-lg leading-relaxed text-lune-light/80 mb-6">
+                        Because here's what we know about you: when a cute tiny robot is stuck on a hill on the Moon —
+                        you <span class="font-display font-black text-lune-orange text-xl">WILL</span> figure it out.
+                    </p>
+                    <p class="text-2xl font-display font-black text-lune-orange mb-10">
+                        JUST LOOK AT THOSE EYES.
+                    </p>
+                </div>
+
+                <!-- IMAGE SLOT: Close-up of Lun-E's glowing eyes -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-on-scroll">
+                    <div
+                        class="w-full aspect-video bg-lune-black border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
+                        <!-- REPLACE: Close-up of blue-eyed rover -->
+                        <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: LUN-E
+                            CLOSE-UP<br>— THOSE EYES — ]</span>
+                        <div class="absolute inset-0 pointer-events-none opacity-10"
+                            style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
+                        </div>
+                    </div>
+                    <div
+                        class="w-full aspect-video bg-lune-black border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
+                        <!-- REPLACE: Both rovers looking heroic -->
+                        <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: BOTH ROVERS<br>—
+                            HEROIC SHOT — ]</span>
+                        <div class="absolute inset-0 pointer-events-none opacity-10"
+                            style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========== SPECS SECTION ========== -->
+        <section id="specs" class="py-24 px-4">
+            <div class="max-w-5xl mx-auto">
+
+
+
+                <h2 class="font-display text-4xl md:text-6xl font-black text-lune-orange mb-4 animate-on-scroll">
+                    MEET LUN-E
+                </h2>
+                <p class="text-sm text-lune-light/50 mb-12 max-w-xl animate-on-scroll">
+                    Compact. Expressive. Emotionally unpredictable.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div
+                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
+                        <!-- IMAGE SLOT: rover hardware photo -->
+                        <div
+                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
+                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: ROVER HARDWARE ]</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lune-orange font-display font-bold text-lg mb-4">BRAIN</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Processor</span>
+                                    <span class="text-lune-light">ESP32-C3</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Communication</span>
+                                    <span class="text-lune-light">ESP-NOW (+ FTL*)</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Channel</span>
+                                    <span class="text-lune-light">Wi-Fi Ch. 6</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-lune-dim">Personality</span>
+                                    <span class="text-lune-orange">Curious</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
+                        <!-- IMAGE SLOT: OLED eyes close-up -->
+                        <div
+                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
+                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: OLED EYES ]</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lune-orange font-display font-bold text-lg mb-4">EYES</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Display</span>
+                                    <span class="text-lune-light">SSD1306 OLED (I²C)</span>
+                                </div>
+
+                                <div class="flex justify-between">
+                                    <span class="text-lune-dim">Emotional Range</span>
+                                    <span class="text-lune-orange">Surprisingly Wide</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
+                        <!-- IMAGE SLOT: treads/chassis -->
+                        <div
+                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
+                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: CHASSIS & TREADS ]</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lune-orange font-display font-bold text-lg mb-4">BODY</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Drive</span>
+                                    <span class="text-lune-light">Continuous Rotation Servos</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Steering</span>
+                                    <span class="text-lune-light">Differential (tank-style)</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Platform</span>
+                                    <span class="text-lune-light">Tracks</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-lune-dim">Stubbornness</span>
+                                    <span class="text-lune-orange">Tank-grade</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
+                        <!-- IMAGE SLOT: battery/power -->
+                        <div
+                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
+                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: POWER SYSTEM ]</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lune-orange font-display font-bold text-lg mb-4">POWER</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Battery</span>
+                                    <span class="text-lune-light">3.7V Li-ion</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Charging</span>
+                                    <span class="text-lune-light">TP4056 Module</span>
+                                </div>
+                                <div class="flex justify-between border-b border-lune-orange/5 pb-2">
+                                    <span class="text-lune-dim">Step-up</span>
+                                    <span class="text-lune-light">SX1308 DC-DC Converter</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-lune-dim">Lunar Solar</span>
+                                    <span class="text-lune-orange">Soon</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-lune-dim mt-6 tracking-wider animate-on-scroll">
+                    * FTL communication module is... look, the tests pass. <a
+                        href="https://github.com/absurd-industries" target="_blank"
+                        class="text-lune-orange hover:underline">Check the repo.</a>
+                </p>
+
+            </div>
+        </section>
+
+        <!-- ========== FAQ SECTION ========== -->
+        <section class="py-24 px-4 bg-lune-gray">
+            <div class="max-w-3xl mx-auto">
+
+                <h2 class="font-display text-4xl md:text-5xl font-black text-lune-orange mb-12 animate-on-scroll">
+                    FREQUENTLY ASKED QUESTIONS
+                </h2>
+
+                <div class="space-y-4">
+                    <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">Is this real?</h3>
+                        <p class="text-sm text-lune-light/70 leading-relaxed">
+                            The rovers are real. The Moon footage is... cinematic. The FTL communication protocol passes
+                            all unit tests and we will not be taking questions at this time.
+                        </p>
+                    </div>
+
+                    <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">Why do the rovers have opinions?</h3>
+                        <p class="text-sm text-lune-light/70 leading-relaxed">
+                            We gave them animated eyes for "visual feedback." We did not anticipate the emotional
+                            consequences. This is on us.
+                        </p>
+                    </div>
+
+                    <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">Can I actually control a rover?</h3>
+                        <p class="text-sm text-lune-light/70 leading-relaxed">
+                            Sign up as a Lun-E Pilot. We'll send you your credentials. Whether the rover listens to you
+                            is between you and the rover.
+                        </p>
+                    </div>
+
+                    <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">Is April 1st significant to your company?
+                        </h3>
+                        <p class="text-sm text-lune-light/70 leading-relaxed">
+                            We've always found that the best day to announce paradigm-shifting technology is when
+                            everyone is most receptive to new ideas. Pure coincidence.
+                        </p>
+                    </div>
+
+                    <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
+                        <h3 class="text-lune-orange font-bold text-sm mb-2">What if I break a rover?</h3>
+                        <p class="text-sm text-lune-light/70 leading-relaxed">
+                            You can't. They're on the Moon. What are you going to do, go up there? ...actually, we have
+                            a <a href="https://ascencus.absurd.industries" target="_blank"
+                                class="text-lune-orange hover:underline">space elevator</a> for that.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========== FINAL CTA ========== -->
+        <section class="py-32 px-4 text-center relative overflow-hidden">
+            <!-- Background glow -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lune-orange/5 rounded-full blur-[120px]">
+            </div>
+
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <h2 class="font-display text-5xl md:text-7xl font-black text-lune-orange mb-6 animate-on-scroll">
+                    HELP A LUN-E.
+                </h2>
+                <p class="text-lg text-lune-light/60 mb-10 animate-on-scroll">
+                    The <span class="text-lune-orange">only</span> thing we cannot engineer is common sense.<br>
+                    That's your department.
+                </p>
+                <button @click="showModal = true"
+                    class="tech-btn bg-lune-orange text-lune-black font-display font-black py-4 px-12 text-xl tracking-wide pixel-corners animate-on-scroll">
+                    BECOME A PILOT
+                </button>
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="py-12 px-4 border-t border-lune-orange/20">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between gap-8">
+                    <div>
+                        <h3 class="font-display font-black text-lune-orange text-xl">LUN-E</h3>
+                        <p class="text-sm text-lune-dim mt-2">We put robots where they don't belong.</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-8 text-sm">
+                        <div>
+                            <h4 class="text-lune-orange font-bold text-xs tracking-wider mb-2">OPEN SOURCE</h4>
+                            <a href="https://github.com/harshirth-cmd/T-01-The-Explorer" target="_blank"
+                                class="text-lune-light/50 hover:text-lune-orange transition-colors block">T-01: The
+                                Explorer</a>
+
+                        </div>
+                        <div>
+                            <h4 class="text-lune-orange font-bold text-xs tracking-wider mb-2">CONTACT</h4>
+                            <a href="mailto:lune@absurd.industries"
+                                class="text-lune-light/50 hover:text-lune-orange transition-colors block">lune@absurd.industries</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center text-[10px] text-lune-dim tracking-wider space-y-2">
+
+                    <p>Made with ❤️ and way to little time in Bengaluru, India.</p>
+                    <p class="mt-4">
+                        <button @click="showReveal = true"
+                            class="text-lune-dim/50 hover:text-lune-orange transition-colors cursor-pointer">
+                            yes this is an april fools thing. no the FTL is not real. yes the rovers are.
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </div><!-- end #app -->
+
+    <script src="app.js"></script>
+</body>
+
+</html>
