@@ -5,28 +5,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>LUN-E: Lunar Operations // absurd.industries</title>
-    <meta name="title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <title>LUN-E</title>
+    <meta name="title" content="LUN-E: Control a Rover on the Moon" />
     <meta name="description"
-        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
+        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://lune.absurd.industries/" />
-    <meta property="og:title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <meta property="og:title" content="LUN-E: Control a Rover on the Moo" />
     <meta property="og:description"
-        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
+        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
     <meta property="og:image" content="https://lune.absurd.industries/og-image.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://lune.absurd.industries/" />
-    <meta property="twitter:title" content="LUN-E: Lunar Operations — Control a Rover on the Moon" />
+    <meta property="twitter:title" content="LUN-E: Control a Rover on the Moo" />
     <meta property="twitter:description"
-        content="absurd.industries deployed a swarm of autonomous rovers to the Moon. They need YOUR help." />
+        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help." />
     <meta property="twitter:image" content="https://lune.absurd.industries/og-image.png" />
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href=favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Lun-E" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="style.css" />
@@ -125,12 +131,6 @@
                     class="absolute top-4 right-4 text-lune-orange text-2xl font-bold hover:text-white transition-colors">&times;</button>
                 <h2 class="font-display text-3xl font-black text-lune-orange mb-4">APRIL FOOLS!</h2>
 
-                <!-- IMAGE SLOT: april fools reveal image -->
-                <div
-                    class="w-full h-48 bg-lune-black border border-lune-orange/20 pixel-corners mb-6 flex items-center justify-center">
-                    <span class="text-lune-dim text-xs tracking-widest">[ REVEAL IMAGE GOES HERE ]</span>
-                </div>
-
                 <p class="mb-4 text-sm leading-relaxed">
                     While we'd absolutely <span class="text-lune-orange font-bold">love</span> to put Lun-Es on the
                     actual Moon (and we haven't ruled it out), the rovers are currently deployed on a bedsheet in
@@ -139,7 +139,7 @@
                 <p class="mb-6 text-sm leading-relaxed">
                     But the rovers ARE real! Lun-E is a campaign for the soon to arrive open-source
                     <span class="text-lune-orange font-bold">T-01: The Explorer</span>.
-                    Go build one, or drop your email to be a pilot program and we'll ping you once the kits are out.
+                    Go build one, or drop your email to be a pilot and we'll ping you once they're out.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -149,15 +149,6 @@
                         <a href="https://github.com/harshirth-cmd/T-01-The-Explorer" target="_blank"
                             class="inline-block tech-btn bg-lune-orange text-lune-black font-bold py-2 px-4 text-xs pixel-corners">
                             VIEW ON GITHUB →
-                        </a>
-                    </div>
-                    <div>
-                        <h3 class="text-lune-orange font-bold text-sm mb-2">MORE ABSURDITY</h3>
-                        <p class="text-xs text-lune-light/60 mb-3">We put robots where they don't belong. And we're just
-                            getting started.</p>
-                        <a href="https://absurd.industries" target="_blank"
-                            class="inline-block tech-btn bg-lune-orange text-lune-black font-bold py-2 px-4 text-xs pixel-corners">
-                            ABSURD.INDUSTRIES →
                         </a>
                     </div>
                 </div>
@@ -181,7 +172,7 @@
                     LUN-E
                 </h1>
                 <p class="text-sm md:text-base text-lune-light/70 max-w-xl mx-auto mb-10 leading-relaxed">
-                    A swarm of autonomous rovers on the Moon. <br>And they need your help.
+                    A swarm of autonomous rovers on the Moon. And they need your help.
                 </p>
 
                 <!-- VIDEO SLOT: Hero trailer -->
@@ -206,7 +197,7 @@
                     </div>
                     <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
                         <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">0ms</span>
-                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">EARTH↔MOON LATENCY</p>
+                        <p class="text-[10px] text-lune-dim tracking-wider mt-1">LATENCY</p>
                     </div>
                     <div class="bg-lune-gray/60 border border-lune-orange/10 p-4 pixel-corners">
                         <span class="font-display text-2xl md:text-3xl font-black text-lune-orange">∞</span>
@@ -454,11 +445,6 @@
                     </div>
                 </div>
 
-                <p class="text-[10px] text-lune-dim mt-6 tracking-wider animate-on-scroll">
-                    * FTL communication module is... look, the tests pass. <a
-                        href="https://github.com/absurd-industries" target="_blank"
-                        class="text-lune-orange hover:underline">Check the repo.</a>
-                </p>
 
             </div>
         </section>
@@ -526,7 +512,7 @@
             </div>
 
             <div class="relative z-10 max-w-2xl mx-auto">
-                <h2 class="font-display text-5xl md:text-7xl font-black text-lune-orange mb-6 animate-on-scroll">
+                <h2 class="font-display text-4xl md:text-7xl font-black text-lune-orange mb-6 animate-on-scroll">
                     HELP A LUN-E.
                 </h2>
                 <p class="text-lg text-lune-light/60 mb-10 animate-on-scroll">
