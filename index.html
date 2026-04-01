@@ -8,29 +8,29 @@
     <title>LUN-E</title>
     <meta name="title" content="LUN-E: Control a Rover on the Moon" />
     <meta name="description"
-        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
+        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a LUN-E." />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://lune.absurd.industries/" />
-    <meta property="og:title" content="LUN-E: Control a Rover on the Moo" />
+    <meta property="og:title" content="LUN-E: Control a Rover on the Moon" />
     <meta property="og:description"
-        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a Lun-E." />
-    <meta property="og:image" content="https://lune.absurd.industries/og-image.png" />
+        content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help. Take the controls. Save a LUN-E." />
+    <meta property="og:image" content="https://lune.absurd.industries/meta.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://lune.absurd.industries/" />
-    <meta property="twitter:title" content="LUN-E: Control a Rover on the Moo" />
+    <meta property="twitter:title" content="LUN-E: Control a Rover on the Moon" />
     <meta property="twitter:description"
         content="We've deployed a swarm of autonomous rovers to the Moon. They need YOUR help." />
-    <meta property="twitter:image" content="https://lune.absurd.industries/og-image.png" />
+    <meta property="twitter:image" content="https://lune.absurd.industries/meta.jpg" />
 
     <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href=favicon/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link rel="shortcut icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Lun-E" />
+    <meta name="apple-mobile-web-app-title" content="LUN-E" />
     <link rel="manifest" href="favicon/site.webmanifest" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -68,60 +68,6 @@
 
     <div id="app">
 
-        <!-- ========== PILOT SIGNUP MODAL ========== -->
-        <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center"
-            @click.self="showModal = false">
-            <div class="absolute inset-0 bg-lune-black/90 backdrop-blur-sm"></div>
-            <div class="relative bg-lune-gray w-11/12 max-w-xl p-8 pixel-corners border-2 border-lune-orange">
-                <button @click="showModal = false"
-                    class="absolute top-4 right-4 text-lune-orange text-2xl font-bold hover:text-white transition-colors">&times;</button>
-
-                <!-- Before submit -->
-                <div v-if="!pilotRegistered">
-                    <div class="flex items-center gap-3 mb-2">
-                        <div class="w-3 h-3 bg-lune-orange rounded-full animate-pulse"></div>
-                        <span class="text-lune-orange text-xs tracking-[0.3em] uppercase">Recruitment Open</span>
-                    </div>
-                    <h2 class="font-display text-3xl md:text-4xl font-black text-lune-orange mb-3">
-                        BECOME A LUN-E PILOT
-                    </h2>
-                    <p class="mb-6 text-lune-light/70 text-sm leading-relaxed">
-                        We need humans. Specifically, we need the kind of human who sees a tiny robot stuck on a lunar
-                        hill and takes it <span class="text-lune-orange">personally</span>. Enter your email. We'll send
-                        you your pilot credentials and mission briefing.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <input v-model="pilotEmail" type="email" placeholder="pilot@earth.com"
-                            class="flex-1 bg-lune-black border border-lune-orange/40 text-lune-light px-4 py-3 font-mono text-sm focus:outline-none focus:border-lune-orange placeholder:text-lune-dim pixel-corners"
-                            @keyup.enter="registerPilot" />
-                        <button @click="registerPilot"
-                            class="tech-btn bg-lune-orange text-lune-black font-bold py-3 px-6 text-sm tracking-wider pixel-corners whitespace-nowrap">
-                            ENLIST →
-                        </button>
-                    </div>
-                    <p class="text-[10px] text-lune-dim mt-3">
-                        No spam. Just mission-critical transmissions and the occasional rover emotional status update.
-                    </p>
-                </div>
-
-                <!-- After submit -->
-                <div v-else class="text-center py-4">
-                    <div class="text-5xl mb-4">🌕</div>
-                    <h2 class="font-display text-3xl font-black text-lune-orange mb-3">
-                        PILOT REGISTERED
-                    </h2>
-                    <p class="text-lune-light/70 text-sm mb-4">
-                        Welcome aboard, Pilot. Your credentials are being transmitted to lunar orbit.<br>
-                        Check your inbox for mission briefing.
-                    </p>
-                    <div class="inline-block bg-lune-black border border-lune-orange/30 px-4 py-2 pixel-corners">
-                        <span class="text-lune-dim text-xs">CALLSIGN:</span>
-                        <span class="text-lune-orange font-bold ml-2">{{ pilotCallsign }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- ========== APRIL FOOLS REVEAL MODAL ========== -->
         <div v-if="showReveal" class="fixed inset-0 z-50 flex items-center justify-center"
             @click.self="showReveal = false">
@@ -132,21 +78,24 @@
                 <h2 class="font-display text-3xl font-black text-lune-orange mb-4">APRIL FOOLS!</h2>
 
                 <p class="mb-4 text-sm leading-relaxed">
-                    While we'd absolutely <span class="text-lune-orange font-bold">love</span> to put Lun-Es on the
+                    While we'd absolutely <span class="text-lune-orange font-bold">love</span> to put LUN-Es on the
                     actual Moon (and we haven't ruled it out), the rovers are currently deployed on a bedsheet in
                     Bengaluru.
                 </p>
                 <p class="mb-6 text-sm leading-relaxed">
-                    But the rovers ARE real! Lun-E is a campaign for the soon to arrive open-source
-                    <span class="text-lune-orange font-bold">T-01: The Explorer</span>.
-                    Go build one, or drop your email to be a pilot and we'll ping you once they're out.
+                    But the rovers ARE real! LUN-E is a campaign for the soon to arrive open-source
+                    <a class="text-lune-orange font-bold" href="https://github.com/harshith-cmd/T-01-The-Explorer"
+                        target="_blank">T-01: The Explorer</a>.
+                    Go build one, or <a href="https://discord.com/invite/DUSUtguG2H"
+                        class="text-lune-orange font-bold">join our discord</a> to know when
+                    it's out to purchase.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-lune-orange font-bold text-sm mb-2">BUILD YOUR OWN</h3>
                         <p class="text-xs text-lune-light/60 mb-3">Full open-source rover platform. ESP32-C3, OLED eyes,
                             tank treads, opinions.</p>
-                        <a href="https://github.com/harshirth-cmd/T-01-The-Explorer" target="_blank"
+                        <a href="https://github.com/harshith-cmd/T-01-The-Explorer" target="_blank"
                             class="inline-block tech-btn bg-lune-orange text-lune-black font-bold py-2 px-4 text-xs pixel-corners">
                             VIEW ON GITHUB →
                         </a>
@@ -172,7 +121,7 @@
                     LUN-E
                 </h1>
                 <p class="text-sm md:text-base text-lune-light/70 max-w-xl mx-auto mb-10 leading-relaxed">
-                    A swarm of autonomous rovers on the Moon. And they need your help.
+                    We've deployed a swarm of autonomous rovers on the Moon. And they need your help.
                 </p>
 
                 <!-- VIDEO SLOT: Hero trailer -->
@@ -210,7 +159,7 @@
                 </div>
 
                 <div class="mt-12">
-                    <button @click="showModal = true"
+                    <button @click="showReveal = true"
                         class="tech-btn bg-lune-orange text-lune-black font-display font-black py-4 px-10 text-lg tracking-wide pixel-corners">
                         BECOME A PILOT
                     </button>
@@ -232,7 +181,7 @@
 
                     <div class="space-y-6 animate-on-scroll">
                         <p class="text-base leading-relaxed text-lune-light/80">
-                            Lun-Es are <span class="text-lune-orange font-bold">smart</span>.
+                            LUN-Es are <span class="text-lune-orange font-bold">smart</span>.
                             Arguably — too smart. They've started having <em>opinions</em>.
                         </p>
                         <p class="text-base leading-relaxed text-lune-light/80">
@@ -251,9 +200,9 @@
                     <div class="animate-on-scroll">
                         <div
                             class="w-full aspect-square bg-lune-dark border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
-                            <!-- REPLACE: Image of rovers on "moon surface" -->
-                            <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: ROVERS IN
-                                A<br>DIFFICULT SITUATION ]</span>
+                            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                                <source src="videos/situation.mp4" type="video/mp4">
+                            </video>
                             <!-- Scanline overlay effect -->
                             <div class="absolute inset-0 pointer-events-none opacity-10"
                                 style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
@@ -291,25 +240,11 @@
                     </p>
                 </div>
 
-                <!-- IMAGE SLOT: Close-up of Lun-E's glowing eyes -->
+                <!-- IMAGE SLOT: Close-up of LUN-E's glowing eyes -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-on-scroll">
                     <div
-                        class="w-full aspect-video bg-lune-black border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
-                        <!-- REPLACE: Close-up of blue-eyed rover -->
-                        <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: LUN-E
-                            CLOSE-UP<br>— THOSE EYES — ]</span>
-                        <div class="absolute inset-0 pointer-events-none opacity-10"
-                            style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
-                        </div>
-                    </div>
-                    <div
-                        class="w-full aspect-video bg-lune-black border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
-                        <!-- REPLACE: Both rovers looking heroic -->
-                        <span class="text-lune-dim text-xs tracking-widest text-center px-4">[ IMAGE: BOTH ROVERS<br>—
-                            HEROIC SHOT — ]</span>
-                        <div class="absolute inset-0 pointer-events-none opacity-10"
-                            style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,106,0,0.1) 2px, rgba(255,106,0,0.1) 4px);">
-                        </div>
+                        class="bg-lune-black border border-lune-orange/20 pixel-corners flex items-center justify-center relative overflow-hidden">
+                        <img src="images/eyes.gif" alt="LUN-E Eyes" class="w-full" />
                     </div>
                 </div>
 
@@ -329,16 +264,14 @@
                     Compact. Expressive. Emotionally unpredictable.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div
-                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
-                        <!-- IMAGE SLOT: rover hardware photo -->
-                        <div
-                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
-                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: ROVER HARDWARE ]</span>
-                        </div>
-                        <div class="p-6">
+                <div class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
+                    <div class="w-full aspect-video bg-lune-black relative overflow-hidden">
+                        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                            <source src="videos/spin.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+                        <div>
                             <h3 class="text-lune-orange font-display font-bold text-lg mb-4">BRAIN</h3>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between border-b border-lune-orange/5 pb-2">
@@ -359,39 +292,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div
-                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
-                        <!-- IMAGE SLOT: OLED eyes close-up -->
-                        <div
-                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
-                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: OLED EYES ]</span>
-                        </div>
-                        <div class="p-6">
+                        <div>
                             <h3 class="text-lune-orange font-display font-bold text-lg mb-4">EYES</h3>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between border-b border-lune-orange/5 pb-2">
                                     <span class="text-lune-dim">Display</span>
                                     <span class="text-lune-light">SSD1306 OLED (I²C)</span>
                                 </div>
-
                                 <div class="flex justify-between">
                                     <span class="text-lune-dim">Emotional Range</span>
                                     <span class="text-lune-orange">Surprisingly Wide</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div
-                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
-                        <!-- IMAGE SLOT: treads/chassis -->
-                        <div
-                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
-                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: CHASSIS & TREADS ]</span>
-                        </div>
-                        <div class="p-6">
+                        <div>
                             <h3 class="text-lune-orange font-display font-bold text-lg mb-4">BODY</h3>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between border-b border-lune-orange/5 pb-2">
@@ -412,16 +326,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div
-                        class="bg-lune-gray border border-lune-orange/10 pixel-corners overflow-hidden animate-on-scroll">
-                        <!-- IMAGE SLOT: battery/power -->
-                        <div
-                            class="w-full h-48 bg-lune-black flex items-center justify-center border-b border-lune-orange/10">
-                            <span class="text-lune-dim text-xs tracking-widest">[ IMAGE: POWER SYSTEM ]</span>
-                        </div>
-                        <div class="p-6">
+                        <div>
                             <h3 class="text-lune-orange font-display font-bold text-lg mb-4">POWER</h3>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between border-b border-lune-orange/5 pb-2">
@@ -477,7 +382,7 @@
                     <div class="bg-lune-black border border-lune-orange/10 pixel-corners p-6 animate-on-scroll">
                         <h3 class="text-lune-orange font-bold text-sm mb-2">Can I actually control a rover?</h3>
                         <p class="text-sm text-lune-light/70 leading-relaxed">
-                            Sign up as a Lun-E Pilot. We'll send you your credentials. Whether the rover listens to you
+                            Sign up as a LUN-E Pilot. We'll send you your credentials. Whether the rover listens to you
                             is between you and the rover.
                         </p>
                     </div>
@@ -519,7 +424,7 @@
                     The <span class="text-lune-orange">only</span> thing we cannot engineer is common sense.<br>
                     That's your department.
                 </p>
-                <button @click="showModal = true"
+                <button @click="showReveal = true"
                     class="tech-btn bg-lune-orange text-lune-black font-display font-black py-4 px-12 text-xl tracking-wide pixel-corners animate-on-scroll">
                     BECOME A PILOT
                 </button>
